@@ -1,0 +1,24 @@
+Parameters:
+Name: 
+  Type: String
+
+Resources: 
+WebsiteBucket: 
+  Type: AWS::S3::Bucket
+  Properties: 
+    BucketName: !Sub "994456bucket"
+    AccessControl:  PublicRead
+    WebsiteConfiguration: 
+      IndexDocument: index.html
+      ErrorDocument: 404.html
+WebsiteBucketPolicy: 
+  Type: AWS::S3::BucketPolicy
+  Properties: 
+    Bucket: !Ref "WebsiteBucket"
+    PolicyDocument: 
+      Statement:
+      - Sid: PublicReadForGetBucketObjects
+        Effect: Allow
+        Pricipal: "*"
+        Action: S3:GetObject
+        Resource: !Join ["",["arn:aws:s3:::", !Ref "websiteBucket", /*]]
