@@ -12,9 +12,9 @@ jobs:
               --template-file bucket.yml \
               --stack-name ${CIRCLE_WORKFLOW_ID}\
               --parameter-overrides NAME="${CIRCLE_WORKFLOW_ID}"\
-              --AWS Access Key ID: AKIASS7D3RRB7WMYIRQS
-              --AWS Secret Access Key: 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
-              --Default region name [us-east-1]: us-east-1
+              --AWS-Access-Key-ID AKIASS7D3RRB7WMYIRQS\
+              --AWS-Secret-Access-Key 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\
+              --region  us-east-1
 
 
       - run: aws s3 sync . s3://"${CIRCLE_WORKFLOW_ID}" --delete
