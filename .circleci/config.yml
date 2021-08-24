@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  create and deploy frontend:
+  create_and_deploy_frontend:
     docker:
       - image: amazon/aws-cli
     steps:
@@ -14,7 +14,7 @@ jobs:
               --parameter-overrides NAME= ${CIRCLE_WORKFLOW_ID}
       - run: aws s3 sync . s3://${CIRCLE_WORKFLOW_ID} --delete
 
-  promote to production:
+  promote_to_production:
     docker:
       - image: amazon/aws-cli
     steps:
@@ -30,7 +30,7 @@ jobs:
 workflows:
    default:
      jobs:
-       - create and deploy frontend
-       - promote to production:
+       - create_and_deploy_frontend
+       - promote_to_production:
            requires: 
-             - [create and deploy frontend]
+             - create and deploy frontend
