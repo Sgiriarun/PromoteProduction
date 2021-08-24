@@ -33,4 +33,4 @@ workflows:
        - create_and_deploy_frontend
        - promote_to_production:
            requires: 
-             - create and deploy frontend
+             - create_and_deploy_frontend
