@@ -5,11 +5,13 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - run: |
-          aws cloudformation deploy \
-          --template-file bucket.yml \
-          --stack-name arun-bucket \
-          --parameter-overrides NAME= ${CIRCLE_WORKFLOW_ID}
+      - run: 
+          name: create_stack
+          command: |      
+            aws cloudformation deploy \
+              --template-file bucket.yml \
+              --stack-name bucket \
+              --parameter-overrides NAME= ${CIRCLE_WORKFLOW_ID}
       - run: aws s3 sync . s3://${CIRCLE_WORKFLOW_ID} --delete
 
   promote to production:
@@ -17,16 +19,18 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - run: |
-          aws cloudformation deploy \
-          --template-file cloudformation.yml \
-          --stack-name cloudfront \
-          --parameter-overrides PipelineID= ${CIRCLE_WORKFLOW_ID}
+      - run: 
+          name: create_stack2
+          command: |
+            aws cloudformation deploy \
+              --template-file cloudformation.yml \
+              --stack-name cloudfront \
+              --parameter-overrides PipelineID= ${CIRCLE_WORKFLOW_ID}
 
-  workflows:
-    default:
-      jobs:
-        - create and deploy frontend
-        - promote to production:
-            requires: 
-              - [create and deploy frontend]
+workflows:
+   default:
+     jobs:
+       - create and deploy frontend
+       - promote to production:
+           requires: 
+             - [create and deploy frontend]
