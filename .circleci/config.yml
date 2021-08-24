@@ -6,8 +6,6 @@ jobs:
     steps:
       - checkout
       - run: |
-          echo $CIRCLE_WORKFLOW_ID
-      - run: |
           aws cloudformation deploy \
             --template-file bucket.yml \
             --stack-name arun-bucket \
